@@ -1,0 +1,11 @@
+/venv
+/.vscode
+/backend/hexapp/images/migrations
+/backend/hexapp/hexapp/__pycache__
+/backend/hexapp/media
+/backend/hexapp/static
+/backend/hexapp/images/__pycache__
+/backend/hexapp/thumbimages/__pycache__
+/backend/hexapp/thumbimages/migrations
+db.sqlite3
+hexapp/static

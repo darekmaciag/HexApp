@@ -1,7 +1,7 @@
 from .models import ThumbImage, ImageLink
 from .serializers import ThumbImageSerializer, ImageLinkListSerializer, ThumbImageSerializer, ImageLinkSerializer, ThumbImageListSerializer
 from django.contrib.auth.models import User
-from .serializers import UserSerializer
+# from .serializers import UserSerializer
 from .permissions import IsStaff, IsOwner, CanSee, ExpiredObjectSuperuserOnly
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -9,10 +9,10 @@ from rest_framework import viewsets, permissions, renderers, mixins
 from django.http import HttpResponseRedirect, FileResponse
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAdminUser]
+# class UserViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = [permissions.IsAdminUser]
 
 
 class PassthroughRenderer(renderers.BaseRenderer):

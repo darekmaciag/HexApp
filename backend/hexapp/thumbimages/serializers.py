@@ -3,12 +3,12 @@ from .models import ThumbImage,ImageLink
 from django.contrib.auth.models import User
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    thumbimages = serializers.HyperlinkedRelatedField(many=True, view_name='thumbimage-detail', read_only=True)
+# class UserSerializer(serializers.HyperlinkedModelSerializer):
+#     thumbimages = serializers.HyperlinkedRelatedField(many=True, view_name='thumbimage-detail', read_only=True)
 
-    class Meta:
-        model = User
-        fields = ['url', 'id', 'username', 'thumbimages']
+#     class Meta:
+#         model = User
+#         fields = ['url', 'id', 'username', 'thumbimages']
 
 
 class ImageLinkSerializer(serializers.HyperlinkedModelSerializer):
@@ -42,26 +42,22 @@ class ThumbImageSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     image_small = serializers.ImageField(read_only=True)
     image_medium = serializers.ImageField(read_only=True)
-    image_url = serializers.SerializerMethodField('get_image_url')
     links = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='thumbimage-detail')
 
     class Meta:
         model = ThumbImage
-        fields = '__all__'
-
-    def get_image_url(self, obj):
-        return obj.image.url
+        fields = fields = ['id', 'owner', 'created', 'title', 'alt', 'image', 'image_small', 'image_medium', 'links']
 
     def to_representation(self,instance):
         ret = super(ThumbImageSerializer,self).to_representation(instance)
-        image = ['hide_image']
-        image_large = ['hide_image_medium']
-        image_medium = ['hide_image_link']
-        if self.context['request'].user.has_perm('snippets.hide_image') and not self.context['request'].user.is_superuser:
+        image = ['image']
+        image_large = ['image_medium']
+        image_medium = ['links']
+        if self.context['request'].user.has_perm('thumbimages.hide_image') and not self.context['request'].user.is_superuser:
             [ret.pop(field,'') for field in image]
-        if self.context['request'].user.has_perm('snippets.hide_image_medium') and not self.context['request'].user.is_superuser:
+        if self.context['request'].user.has_perm('thumbimages.hide_image_medium') and not self.context['request'].user.is_superuser:
             [ret.pop(field,'') for field in image_large]
-        if self.context['request'].user.has_perm('snippets.hide_image_link') and not self.context['request'].user.is_superuser:
+        if self.context['request'].user.has_perm('thumbimages.hide_image_link') and not self.context['request'].user.is_superuser:
             [ret.pop(field,'') for field in image_medium]
         return ret
 

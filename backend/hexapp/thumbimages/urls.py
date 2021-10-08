@@ -7,8 +7,8 @@ from .views import ThumbImageViewSet, ImageLinkViewSet, ImageLinkListViewSet
 
 
 router = DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'images', views.ThumbImageViewSet)
+# router.register(r'users', views.UserViewSet)
+router.register(r'thumbimages', views.ThumbImageViewSet)
 router.register(r'createlink', views.ImageLinkViewSet)
 router.register(r'createlink', views.ImageLinkListViewSet)
 

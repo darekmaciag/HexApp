@@ -30,10 +30,16 @@ class IsOwner(permissions.BasePermission):
 
 
 class CanSee(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if not request.user.has_perm('thumbimage.hide_image') or request.user.is_superuser:
+    def has_permission(self, request, view):
+        if not request.user.has_perm('thumbimages.hide_image_link') or request.user.is_superuser:
             return True
         return False
+
+    def has_object_permission(self, request, view, obj):
+        if not request.user.has_perm('thumbimages.hide_image_link') or request.user.is_superuser:
+            return True
+        return False
+
 
 
 class ExpiredObjectSuperuserOnly(permissions.BasePermission):
